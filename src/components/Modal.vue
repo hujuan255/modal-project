@@ -1,12 +1,19 @@
 <template>
   <!-- @clicl.self 事件修饰符只作用在该元素身上的事件，忽略了其他元素的冒泡或捕获事件，这种忽略只局限于自身 -->
-  <div class="backrop" @click.stop="closeModal">
+  <div class="backrop" @click.self="closeModal">
     <!-- 动态添加类,类名为sale -->
     <div class="modal" :class="{ sale: theme === 'sale' }">
+      <!-- props -->
       <!-- <h1>朋友</h1>
       <P>你好</P> -->
-      <h1>{{ header }}</h1>
-      <p>{{ text }}</p>
+      <!-- <h1>{{ header }}</h1>
+      <p>{{ text }}</p> -->
+      <!-- 默认插槽 slot -->
+      <slot></slot>
+      <!-- 具名插槽，名称为links的template元素中的所有内容都将会被传入本插槽中 -->
+      <div class="actions">
+        <slot name="links"></slot>
+      </div>
     </div>
   </div>
 </template>
@@ -42,11 +49,29 @@ export default {
   border: none;
   padding: 0;
 }
+.modal .actiocs {
+  text-align: center;
+  margin: 30px 0 10px 0;
+}
+.modal .actions a {
+  color: #333;
+  padding: 8px;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  text-decoration: none;
+  margin: 10px;
+}
 .modal.sale {
   background: #e33434;
   color: #fff;
 }
 .modal.sale h1 {
+  color: #fff;
+}
+.modal.sale .actions {
+  color: #fff;
+}
+.modal.sale .actions a {
   color: #fff;
 }
 </style>

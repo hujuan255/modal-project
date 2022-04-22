@@ -3,14 +3,29 @@
   <input type="text" ref="name" />
   <button @click="handleClick">点击</button>
   <div v-if="isShowModal">
-    <!-- 自定义事件close -->
+    <!-- 自定义事件close
     <Modal
       :header="header"
       :text="text"
       theme="sale"
       @close="toggleModal"
-    ></Modal>
+    ></Modal> -->
+    <!-- 插槽 slot -->
+    <Modal theme="sale" @close="toggleModal">
+      <!-- 具名插槽 在template元素上使用v-slot指令，以v-slot的值为其提供名称-->
+      <template v-slot:links>
+        <a href="https://www.baidu.com">百度</a>
+        <a href="https://www.sina.com">新浪</a>
+      </template>
+      <h1>引爆点</h1>
+      <p>如何引发流行?</p>
+    </Modal>
   </div>
+  <teleport to=".modals" v-if="isShowModal2">
+    <Modal @close="toggleModal2">
+      <p>这是一个插槽</p>
+    </Modal>
+  </teleport>
   <!-- 
         默认左键单击
         @click.right 右键
@@ -19,6 +34,7 @@
         @click.alt 按住alt单击
     -->
   <button @click="toggleModal">显示模板</button>
+  <button @click="toggleModal2">显示练习模板</button>
 </template>
 
 <script>
@@ -34,6 +50,7 @@ export default {
       header: "提示",
       text: "你好",
       isShowModal: false,
+      isShowModal2: false,
     };
   },
   methods: {
@@ -47,6 +64,9 @@ export default {
     },
     toggleModal() {
       this.isShowModal = !this.isShowModal;
+    },
+    toggleModal2() {
+      this.isShowModal2 = !this.isShowModal2;
     },
   },
 };
